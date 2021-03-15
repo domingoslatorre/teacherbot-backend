@@ -1,12 +1,11 @@
-#  DATASOURCE_URL=jdbc:postgresql://localhost:5432/demo_db;DATASOURCE_USERNAME=user;DATASOURCE_PASSWORD=123456
 spring:
   server:
     port: 8080
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: ${DATASOURCE_URL}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/demo_db}
+    username: ${DATASOURCE_USERNAME:user}
+    password: ${DATASOURCE_PASSWORD:123456}
   jpa:
     hibernate:
       ddl-auto: update
