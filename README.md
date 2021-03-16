@@ -5,9 +5,11 @@ TeacherBot backend is the REST API for the teacherbot project.
 ## Built with
 
 - Kotlin
-- Spring boot
+- Spring Boot
 - Bean validation
-- Spri
+- Spring Data JPA
+- PostgreSQL (dev, prod), H2 Database (test)
+- Kotest
 
 ## Getting Started
 
