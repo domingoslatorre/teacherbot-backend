@@ -43,6 +43,11 @@ class CoursesIntegrationTests(
     private fun putCourseProblemDetail(courseReq: CourseReq, id: UUID): ResponseEntity<ProblemDetail> =
         restTemplate.exchange("$coursesUrl/$id", HttpMethod.PUT, HttpEntity(courseReq, HttpHeaders.EMPTY), problemDetailParam)
 
+    private fun deleteCourse(id: UUID): ResponseEntity<Void> =
+        restTemplate.exchange("$coursesUrl/$id", HttpMethod.DELETE)
+
+    private fun deleteCourseProblemDetail(id: UUID): ResponseEntity<ProblemDetail> =
+        restTemplate.exchange("$coursesUrl/$id", HttpMethod.DELETE, null, problemDetailParam)
 
     @Test
     fun `GET all courses - empty list`() {
@@ -253,6 +258,24 @@ class CoursesIntegrationTests(
             statusCode shouldBe HttpStatus.CONFLICT
             body!!.apply {
                 title shouldBe "Resource already exists"
+            }
+        }
+    }
+
+    @Test
+    fun `DELETE course`() {
+        val postRes = postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
+        deleteCourse(postRes.body!!.id).apply {
+            statusCode shouldBe HttpStatus.NO_CONTENT
+        }
+    }
+
+    @Test
+    fun `DELETE course - NotFound`() {
+        deleteCourseProblemDetail(UUID.randomUUID()).apply {
+            statusCode shouldBe HttpStatus.NOT_FOUND
+            body!!.apply {
+                title shouldBe "Resource not found"
             }
         }
     }
