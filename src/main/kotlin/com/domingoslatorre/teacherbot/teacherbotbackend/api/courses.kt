@@ -22,6 +22,8 @@ class Course(
 @Repository
 interface CourseRepository : PagingAndSortingRepository<Course, UUID> {
     fun existsByNameOrAcronym(name: String, acronym: String): Boolean
+    fun findByName(name: String): Optional<Course>
+    fun findByAcronym(acronym: String): Optional<Course>
 }
 
 @RestController
@@ -43,8 +45,13 @@ class CourseController(val repo: CourseRepository) {
     @PutMapping("{id}")
     fun update(@Valid @RequestBody body: CourseReq, @PathVariable id: UUID) =
         repo.findById(id).orElseThrow { throw NotFoundException() }.let {
-            if(courseAlreadyExists(body)) throw AlreadyExistsException()
-            else ResponseEntity.ok(repo.save(Course(it.id, body.name!!, body.acronym!!, body.description!!)))
+            val sameName = repo.findByName(body.name!!)
+            val sameAcronym = repo.findByAcronym(body.acronym!!)
+
+            if((sameName.isPresent && sameAcronym.isPresent) && (sameName.get().id != id || sameAcronym.get().id != id)) {
+                throw AlreadyExistsException()
+            }
+            ResponseEntity.ok(repo.save(Course(it.id, body.name, body.acronym, body.description!!)))
         }
 
     @DeleteMapping("{id}")
