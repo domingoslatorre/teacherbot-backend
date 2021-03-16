@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
     url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/teacherbot_backend_dev}
-    username: ${DATASOURCE_USERNAME:user}
+    username: ${DATASOURCE_USERNAME:admin}
     password: ${DATASOURCE_PASSWORD:123456}
   jpa:
     hibernate:
