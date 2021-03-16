@@ -21,12 +21,14 @@ class Course(
 
 @Repository
 interface CourseRepository : PagingAndSortingRepository<Course, UUID> {
-    fun existsByName(name: String): Boolean
+    fun existsByNameOrAcronym(name: String, acronym: String): Boolean
 }
 
 @RestController
 @RequestMapping("courses")
 class CourseController(val repo: CourseRepository) {
+    private fun courseAlreadyExists(body: CourseReq) = repo.existsByNameOrAcronym(body.name!!, body.acronym!!)
+
     @GetMapping
     fun list(pageable: Pageable) = ResponseEntity.ok(repo.findAll(pageable).map { it.asResp() })
 
@@ -35,13 +37,13 @@ class CourseController(val repo: CourseRepository) {
 
     @PostMapping
     fun create(@Valid @RequestBody body: CourseReq) =
-        if(repo.existsByName(body.name!!)) throw AlreadyExistsException()
+        if(courseAlreadyExists(body)) throw AlreadyExistsException()
         else ResponseEntity.created(URI.create("")).body(repo.save(body.asCourse()).asResp())
 
     @PutMapping("{id}")
     fun update(@Valid @RequestBody body: CourseReq, @PathVariable id: UUID) =
         repo.findById(id).orElseThrow { throw NotFoundException() }.let {
-            if(repo.existsByName(body.name!!)) throw AlreadyExistsException()
+            if(courseAlreadyExists(body)) throw AlreadyExistsException()
             else ResponseEntity.ok(repo.save(Course(it.id, body.name!!, body.acronym!!, body.description!!)))
         }
 
