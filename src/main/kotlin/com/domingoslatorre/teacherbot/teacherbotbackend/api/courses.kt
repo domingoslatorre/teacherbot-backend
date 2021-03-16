@@ -34,12 +34,12 @@ class CourseController(val repo: CourseRepository) {
     fun show(@PathVariable id: UUID) = ResponseEntity.ok(repo.findById(id).orElseThrow { NotFoundException() }.asResp())
 
     @PostMapping
-    fun create(@Valid @RequestBody body: CourseCreate) =
+    fun create(@Valid @RequestBody body: CourseReq) =
         if(repo.existsByName(body.name!!)) throw AlreadyExistsException()
         else ResponseEntity.created(URI.create("")).body(repo.save(body.asCourse()).asResp())
 
     @PutMapping("{id}")
-    fun update(@Valid @RequestBody body: CourseUpdate, @PathVariable id: UUID) =
+    fun update(@Valid @RequestBody body: CourseReq, @PathVariable id: UUID) =
         repo.findById(id).orElseThrow { throw NotFoundException() }.let {
             if(repo.existsByName(body.name!!)) throw AlreadyExistsException()
             else ResponseEntity.ok(repo.save(Course(it.id, body.name!!, body.acronym!!, body.description!!)))
@@ -53,25 +53,19 @@ class CourseController(val repo: CourseRepository) {
         }
 }
 
-data class CourseCreate(
+data class CourseReq(
     @field:NotNull @field:NotBlank val name: String?,
     @field:NotNull @field:NotBlank @field:Size(min = 2, max = 5) val acronym: String?,
     @field:NotNull @field:NotBlank val description: String?,
 )
 
-fun CourseCreate.asCourse() = Course(name = name!!, acronym = acronym!!, description = description!!)
+fun CourseReq.asCourse() = Course(name = name!!, acronym = acronym!!, description = description!!)
 
-data class CourseUpdate(
-    @field:NotNull @field:NotBlank val name: String?,
-    @field:NotNull @field:NotBlank @field:Size(min = 2, max = 5) val acronym: String?,
-    @field:NotNull @field:NotBlank val description: String?,
-)
-
-data class CourseResponse(
+data class CourseRes(
     val id: UUID,
     val name: String,
     val acronym: String,
     val description: String
 )
 
-fun Course.asResp() = CourseResponse(id, name, acronym, description)
+fun Course.asResp() = CourseRes(id, name, acronym, description)
