@@ -1,6 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.api
 
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.http.*
 import org.springframework.stereotype.*
@@ -22,14 +23,18 @@ class Course(
 @Repository
 interface CourseRepository : PagingAndSortingRepository<Course, UUID> {
     fun existsByNameOrAcronym(name: String, acronym: String): Boolean
-    fun findByName(name: String): Optional<Course>
-    fun findByAcronym(acronym: String): Optional<Course>
+
+    @Query("select count(c) > 0 from Course c where (c.name = ?1 or c.acronym = ?2) and c.id != ?3")
+    fun existsByNameOrAcronymExcludedId(name: String, acronym: String, id: UUID): Boolean
 }
 
 @RestController
 @RequestMapping("courses")
 class CourseController(val repo: CourseRepository) {
     private fun courseAlreadyExists(body: CourseReq) = repo.existsByNameOrAcronym(body.name!!, body.acronym!!)
+
+    private fun courseAlreadyExistsExcludedId(body: CourseReq, id: UUID) =
+        repo.existsByNameOrAcronymExcludedId(body.name!!, body.acronym!!, id)
 
     @GetMapping
     fun list(pageable: Pageable) = ResponseEntity.ok(repo.findAll(pageable).map { it.asResp() })
@@ -45,13 +50,8 @@ class CourseController(val repo: CourseRepository) {
     @PutMapping("{id}")
     fun update(@Valid @RequestBody body: CourseReq, @PathVariable id: UUID) =
         repo.findById(id).orElseThrow { throw NotFoundException() }.let {
-            val sameName = repo.findByName(body.name!!)
-            val sameAcronym = repo.findByAcronym(body.acronym!!)
-
-            if((sameName.isPresent && sameAcronym.isPresent) && (sameName.get().id != id || sameAcronym.get().id != id)) {
-                throw AlreadyExistsException()
-            }
-            ResponseEntity.ok(repo.save(Course(it.id, body.name, body.acronym, body.description!!)))
+            if(courseAlreadyExistsExcludedId(body, id)) throw AlreadyExistsException()
+            else ResponseEntity.ok(repo.save(Course(it.id, body.name!!, body.acronym!!, body.description!!)))
         }
 
     @DeleteMapping("{id}")
