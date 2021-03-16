@@ -19,7 +19,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(value = [NotFoundException::class])
     fun handleNotFoundError(exception: NotFoundException) =
-        ResponseEntity(ProblemDetail("Resource not found", listOf()), HttpStatus.CONFLICT)
+        ResponseEntity(ProblemDetail("Resource not found", listOf()), HttpStatus.NOT_FOUND)
 
 
     @ExceptionHandler(value = [MethodArgumentNotValidException::class])
