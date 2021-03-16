@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "cb6bbd8d-0233-4d47-97dd-f6abc69b46c0",
+		"name": "teacherbot-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "courses",
+			"item": [
+				{
+					"name": "List courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find a course by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/fa5a6065-f793-413e-90ea-bb94e99f54c7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"fa5a6065-f793-413e-90ea-bb94e99f54c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Lógica de Programacao 1\",\n    \"acronym\": \"LG1\",\n    \"description\": \"Lógica de programacao 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a course",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Lógica de Programacao 2\",\n    \"acronym\": \"LG2\",\n    \"description\": \"Lógica de programacao 2 ...\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/fa5a6065-f793-413e-90ea-bb94e99f54c7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"fa5a6065-f793-413e-90ea-bb94e99f54c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/fa5a6065-f793-413e-90ea-bb94e99f54c7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"fa5a6065-f793-413e-90ea-bb94e99f54c7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
