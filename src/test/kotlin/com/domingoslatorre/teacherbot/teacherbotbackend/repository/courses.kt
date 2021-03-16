@@ -31,48 +31,15 @@ class CourseRepositoryTeste(
     }
 
     @Test
-    fun `should find a course by name`() {
+    fun `should exists by name or acronym, excluded id`() {
         val course1 = Course(name = "Lógica 1", acronym = "LG1", description = "...").also { courseRepository.save(it) }
         val course2 = Course(name = "Lógica 2", acronym = "LG2", description = "...").also { courseRepository.save(it) }
 
-        courseRepository.findByName(course1.name).get().apply {
-            id shouldBe course1.id
-            name shouldBe course1.name
-            acronym shouldBe course1.acronym
-            description shouldBe course1.description
-        }
-
-        courseRepository.findByName(course2.name).get().apply {
-            id shouldBe course2.id
-            name shouldBe course2.name
-            acronym shouldBe course2.acronym
-            description shouldBe course2.description
-        }
-
-        courseRepository.findByName("Linguagem 1").isPresent.shouldBeFalse()
-
-    }
-
-    @Test
-    fun `should find a course by acronym`() {
-        val course1 = Course(name = "Lógica 1", acronym = "LG1", description = "...").also { courseRepository.save(it) }
-        val course2 = Course(name = "Lógica 2", acronym = "LG2", description = "...").also { courseRepository.save(it) }
-
-        courseRepository.findByAcronym(course1.acronym).get().apply {
-            id shouldBe course1.id
-            name shouldBe course1.name
-            acronym shouldBe course1.acronym
-            description shouldBe course1.description
-        }
-
-        courseRepository.findByAcronym(course2.acronym).get().apply {
-            id shouldBe course2.id
-            name shouldBe course2.name
-            acronym shouldBe course2.acronym
-            description shouldBe course2.description
-        }
-
-        courseRepository.findByAcronym("LP1").isPresent.shouldBeFalse()
-
+        courseRepository.existsByNameOrAcronymExcludedId(course1.name, course1.acronym, course2.id).shouldBeTrue()
+        courseRepository.existsByNameOrAcronymExcludedId(course1.name, "ABC", course2.id).shouldBeTrue()
+        courseRepository.existsByNameOrAcronymExcludedId("Linguagem", "ABC", course2.id).shouldBeFalse()
+        courseRepository.existsByNameOrAcronymExcludedId("Lógica 2", "LG2", course2.id).shouldBeFalse()
+        courseRepository.existsByNameOrAcronymExcludedId("Lógica 2", "LG3", course2.id).shouldBeFalse()
+        courseRepository.existsByNameOrAcronymExcludedId("Lógica 3", "LG2", course2.id).shouldBeFalse()
     }
 }
