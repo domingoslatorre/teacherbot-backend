@@ -2,7 +2,7 @@ package com.domingoslatorre.teacherbot.teacherbotbackend.api
 
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.PagingAndSortingRepository
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.stereotype.*
 import org.springframework.web.bind.annotation.*
 import java.net.URI
@@ -58,7 +58,7 @@ class CourseController(val repo: CourseRepository) {
     fun delete(@PathVariable id: UUID) =
         repo.findById(id).orElseThrow { throw NotFoundException() }.let {
             repo.deleteById(id)
-            ResponseEntity.noContent()
+            ResponseEntity<Void>(HttpStatus.NO_CONTENT)
         }
 }
 
