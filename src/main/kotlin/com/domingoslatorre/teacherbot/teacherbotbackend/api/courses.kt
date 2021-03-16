@@ -55,7 +55,7 @@ class CourseController(val repo: CourseRepository) {
 
 data class CourseCreate(
     @field:NotNull @field:NotBlank val name: String?,
-    @field:NotNull @field:NotBlank val acronym: String?,
+    @field:NotNull @field:NotBlank @field:Size(min = 2, max = 5) val acronym: String?,
     @field:NotNull @field:NotBlank val description: String?,
 )
 
@@ -63,7 +63,7 @@ fun CourseCreate.asCourse() = Course(name = name!!, acronym = acronym!!, descrip
 
 data class CourseUpdate(
     @field:NotNull @field:NotBlank val name: String?,
-    @field:NotNull @field:NotBlank val acronym: String?,
+    @field:NotNull @field:NotBlank @field:Size(min = 2, max = 5) val acronym: String?,
     @field:NotNull @field:NotBlank val description: String?,
 )
 
