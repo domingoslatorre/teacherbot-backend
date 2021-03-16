@@ -52,19 +52,6 @@ class CoursesIntegrationTests(
     }
 
     @Test
-    fun `POST course`() {
-        val courseCreate = CourseReq("Loǵica de Programação 5", "LG5", "Lógica de p...")
-        postCourse(courseCreate).apply {
-            statusCode shouldBe HttpStatus.CREATED
-            body?.apply {
-                name shouldBe courseCreate.name
-                acronym shouldBe courseCreate.acronym
-                description shouldBe courseCreate.description
-            }
-        }
-    }
-
-    @Test
     fun `GET course by id`() {
         val courseCreate = CourseReq("Loǵica de Programação 2", "LG2", "Lógica de p...")
         val postRes = postCourse(courseCreate)
@@ -85,6 +72,43 @@ class CoursesIntegrationTests(
         val uuid = UUID.randomUUID()
         val response: ResponseEntity<ProblemDetail> = restTemplate.getForEntity("$coursesUrl/$uuid", problemDetail)
         response.statusCode shouldBe HttpStatus.NOT_FOUND
+    }
+
+    @Test
+    fun `POST course`() {
+        val courseCreate = CourseReq("Loǵica de Programação 5", "LG5", "Lógica de p...")
+        postCourse(courseCreate).apply {
+            statusCode shouldBe HttpStatus.CREATED
+            body?.apply {
+                name shouldBe courseCreate.name
+                acronym shouldBe courseCreate.acronym
+                description shouldBe courseCreate.description
+            }
+        }
+    }
+
+    @Test
+    fun `POST course - same name - conflict`() {
+        val courseReq1 = CourseReq("Loǵica de Programação 1", "LG1", "Lógica de p...")
+        val courseReq2 = CourseReq("Loǵica de Programação 1", "LG2", "Lógica de p...")
+        postCourse(courseReq1)
+
+        val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(coursesUrl, courseReq2, problemDetail)
+        response.apply {
+            statusCode shouldBe HttpStatus.CONFLICT
+        }
+    }
+
+    @Test
+    fun `POST course - same acronym - conflict`() {
+        val courseReq1 = CourseReq("Loǵica de Programação 1", "LG1", "Lógica de p...")
+        val courseReq2 = CourseReq("Loǵica de Programação 2", "LG1", "Lógica de p...")
+        postCourse(courseReq1)
+
+        val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(coursesUrl, courseReq2, problemDetail)
+        response.apply {
+            statusCode shouldBe HttpStatus.CONFLICT
+        }
     }
 
 
