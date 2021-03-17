@@ -6,9 +6,11 @@ import com.domingoslatorre.teacherbot.teacherbotbackend.course.model.*
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.*
 import org.springframework.data.domain.*
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
+@Transactional
 class CourseService(val repo: CourseRepository) {
 
     fun create(name: String, description: String, acronym: String): CourseDto =

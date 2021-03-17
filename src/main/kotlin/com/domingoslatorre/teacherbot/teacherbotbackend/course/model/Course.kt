@@ -11,7 +11,7 @@ class Course(
     val acronym: String,
     val description: String,
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "course_id")
     val modules: MutableList<Module> = mutableListOf(),
 ) {
