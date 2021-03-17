@@ -1,4 +1,4 @@
-package com.domingoslatorre.teacherbot.teacherbotbackend.api.course.model
+package com.domingoslatorre.teacherbot.teacherbotbackend.course.model
 
 import java.util.*
 import javax.persistence.*

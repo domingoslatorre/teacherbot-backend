@@ -1,6 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.api.course.dto.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.CourseDto
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +16,7 @@ class CourseGetAllTest (
     fun `GET all courses - empty list`() {
         getCourses().apply {
             statusCode shouldBe HttpStatus.OK
-            body?.content shouldBe listOf<CourseRes>()
+            body?.content shouldBe listOf<CourseDto>()
         }
     }
 

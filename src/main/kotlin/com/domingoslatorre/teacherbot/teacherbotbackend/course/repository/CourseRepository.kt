@@ -1,6 +1,6 @@
-package com.domingoslatorre.teacherbot.teacherbotbackend.api.course
+package com.domingoslatorre.teacherbot.teacherbotbackend.course.repository
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.api.course.model.Course
+import com.domingoslatorre.teacherbot.teacherbotbackend.course.model.Course
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.stereotype.Repository

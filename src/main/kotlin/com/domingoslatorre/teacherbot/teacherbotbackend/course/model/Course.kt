@@ -1,9 +1,7 @@
-package com.domingoslatorre.teacherbot.teacherbotbackend.api.course.model
+package com.domingoslatorre.teacherbot.teacherbotbackend.course.model
 
 import java.util.*
 import javax.persistence.*
-
-class ModuleAlreadyExists : RuntimeException()
 
 @Entity
 class Course(
@@ -24,12 +22,5 @@ class Course(
         description = description,
         modules = modules
     )
-
-    fun addModule(title: String, order: Int) {
-        if(modules.firstOrNull { it.title == title } != null)
-            throw ModuleAlreadyExists()
-        modules.add(Module(title = title, order = order))
-    }
-
 }
 
