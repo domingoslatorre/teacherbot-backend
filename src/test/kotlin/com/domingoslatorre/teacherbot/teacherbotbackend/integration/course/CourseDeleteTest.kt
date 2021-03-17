@@ -1,11 +1,11 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.api.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.api.course.dto.CourseReq
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.*
-import org.springframework.http.*
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpStatus
 import java.util.*
 
 class CourseDeleteTest (

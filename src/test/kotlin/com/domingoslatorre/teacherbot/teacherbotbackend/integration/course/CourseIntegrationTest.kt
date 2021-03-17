@@ -1,6 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.api.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.common.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.api.course.dto.*
 import com.domingoslatorre.teacherbot.teacherbotbackend.util.TestPage
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.*

@@ -1,6 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.api.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.common.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.api.course.dto.CourseRes
 import com.domingoslatorre.teacherbot.teacherbotbackend.util.TestPage
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.ResponseEntity

@@ -1,6 +1,6 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.requests
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.api.CourseReq
+import com.domingoslatorre.teacherbot.teacherbotbackend.api.course.dto.CourseReq
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.inspectors.forExactly
 import io.kotest.matchers.collections.*

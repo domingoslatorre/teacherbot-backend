@@ -1,4 +1,4 @@
-package com.domingoslatorre.teacherbot.teacherbotbackend.api
+package com.domingoslatorre.teacherbot.teacherbotbackend.common
 
 import org.springframework.http.*
 import org.springframework.web.bind.MethodArgumentNotValidException

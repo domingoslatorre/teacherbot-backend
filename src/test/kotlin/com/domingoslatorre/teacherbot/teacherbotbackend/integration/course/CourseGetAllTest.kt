@@ -1,6 +1,6 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.api.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.api.course.dto.*
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
