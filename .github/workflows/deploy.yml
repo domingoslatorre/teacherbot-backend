@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build image with Gradle
-          run: ./gradlew build
+        run: ./gradlew build
 
       - name: Login to Heroku Container Registry
         env:
