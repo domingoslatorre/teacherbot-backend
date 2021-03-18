@@ -1,4 +1,4 @@
-package com.domingoslatorre.teacherbot.teacherbotbackend.api
+package com.domingoslatorre.teacherbot.teacherbotbackend
 
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.*
 class HealthCheck {
 
     @GetMapping()
-    fun health() = ResponseEntity<Void>(HttpStatus.OK)
+    fun health() = ResponseEntity.ok("Ok")
 }
