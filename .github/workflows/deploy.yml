@@ -20,7 +20,7 @@ jobs:
       - name: Login to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
+        run: heroku container:login --verbose
 
       - name: Build and push
         env:
