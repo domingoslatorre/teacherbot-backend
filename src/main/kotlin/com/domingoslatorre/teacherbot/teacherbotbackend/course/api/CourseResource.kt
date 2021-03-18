@@ -14,25 +14,29 @@ import javax.validation.Valid
 class CourseResource(val service: CourseService) {
 
     @GetMapping
-    fun list(pageable: Pageable) = ResponseEntity.ok(service.findAll(pageable).map { it })
+    fun list(pageable: Pageable) = service.findAll(pageable)
+        .getOrThrow()
+        .let { ResponseEntity.ok(it) }
 
     @GetMapping("{id}")
-    fun show(@PathVariable id: UUID) = ResponseEntity.ok(service.findById(id))
+    fun show(@PathVariable id: UUID) = service.findById(id)
+        .getOrThrow()
+        .let { ResponseEntity.ok(it)  }
 
     @PostMapping
-    fun create(@Valid @RequestBody body: CourseReq) =
-        service.create(body.name!!, body.description!!, body.acronym!!).let {
-            ResponseEntity.created(URI.create("")).body(it)
-        }
+    fun create(@Valid @RequestBody body: CourseReq) = service.create(body.name!!, body.description!!, body.acronym!!)
+        .getOrThrow()
+        .let { ResponseEntity.created(URI.create("")).body(it) }
 
     @PutMapping("{id}")
     fun update(@Valid @RequestBody body: CourseReq, @PathVariable id: UUID) =
-        service.update(id, body.name!!, body.description!!, body.acronym!!).let { ResponseEntity.ok(it) }
+        service.update(id, body.name!!, body.description!!, body.acronym!!)
+            .getOrThrow()
+            .let { ResponseEntity.ok(it)  }
 
     @DeleteMapping("{id}")
-    fun delete(@PathVariable id: UUID): ResponseEntity<Void> {
-        service.delete(id)
-        return ResponseEntity<Void>(HttpStatus.NO_CONTENT)
-    }
+    fun delete(@PathVariable id: UUID): ResponseEntity<Void> = service.delete(id)
+        .getOrThrow()
+        .let { ResponseEntity<Void>(HttpStatus.NO_CONTENT) }
 }
 
