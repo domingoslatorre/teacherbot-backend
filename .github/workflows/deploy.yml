@@ -10,21 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Build image with Gradle
-        run: ./gradlew build
+          run: ./gradlew build
 
-      - name: Updating Ubuntu system and Heroku
-        env: 
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: sudo apt update && sudo apt install heroku neofetch
-      
-      - name: Checking the info
-        run: neofetch
-        
       - name: Login to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
