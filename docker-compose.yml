@@ -34,7 +34,7 @@ services:
       - postgres-container
       - pgadmin-container
     ports:
-      - 8080:8085
+      - 8080:8080
     environment:
       - DATASOURCE_URL=jdbc:postgresql://postgres-container:5432/teacherbot_backend_dev
       - DATASOURCE_USERNAME=admin
