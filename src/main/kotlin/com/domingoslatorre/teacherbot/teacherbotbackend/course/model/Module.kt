@@ -1,7 +1,9 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.course.model
 
-import java.util.*
-import javax.persistence.*
+import java.util.UUID
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
 
 @Entity
 class Module(

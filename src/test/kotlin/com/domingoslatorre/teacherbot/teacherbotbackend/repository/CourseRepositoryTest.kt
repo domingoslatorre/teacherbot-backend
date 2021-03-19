@@ -2,7 +2,8 @@ package com.domingoslatorre.teacherbot.teacherbotbackend.repository
 
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.model.Course
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.repository.CourseRepository
-import io.kotest.matchers.booleans.*
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -12,9 +13,7 @@ import org.springframework.test.context.ActiveProfiles
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
-class CourseRepositoryTeste(
-    @Autowired val courseRepository: CourseRepository
-) {
+class CourseRepositoryTest(@Autowired val courseRepository: CourseRepository) {
 
     @Test
     fun `should exists by name or acronym`() {

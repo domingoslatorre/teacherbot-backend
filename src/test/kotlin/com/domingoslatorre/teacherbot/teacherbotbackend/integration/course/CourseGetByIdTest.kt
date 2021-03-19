@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
-import java.util.*
+import java.util.UUID
 
-class CourseGetByIdTest (
-    @Autowired override val restTemplate: TestRestTemplate
-) : CourseIntegrationTest() {
+class CourseGetByIdTest(@Autowired override val restTemplate: TestRestTemplate) : CourseIntegrationTest() {
 
     @Test
     fun `GET course by id`() {
@@ -35,5 +33,4 @@ class CourseGetByIdTest (
             body?.title shouldBe "Resource not found"
         }
     }
-
 }

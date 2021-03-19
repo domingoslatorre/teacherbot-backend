@@ -1,7 +1,11 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.course.model
 
-import java.util.*
-import javax.persistence.*
+import java.util.UUID
+import javax.persistence.CascadeType
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.OneToMany
 
 @Entity
 class Course(
@@ -23,4 +27,3 @@ class Course(
         modules = modules
     )
 }
-
