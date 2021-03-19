@@ -2,9 +2,9 @@ name: Build and Deploy on Heroku
 
 on:
   push:
-    branches: [ config-github-action ]
+    branches: [ develop ]
   pull_request:
-    branches: [ config-github-action ]
+    branches: [ develop ]
 
   workflow_dispatch:
 
