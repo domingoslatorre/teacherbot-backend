@@ -1,16 +1,16 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.common.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.common.ProblemDetail
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.*
-import org.springframework.http.*
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.test.web.client.postForEntity
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 
-class CourseCreateTest (
-    @Autowired override val restTemplate: TestRestTemplate
-) : CourseIntegrationTest() {
+class CourseCreateTest(@Autowired override val restTemplate: TestRestTemplate) : CourseIntegrationTest() {
 
     @Test
     fun `POST course`() {
@@ -31,7 +31,9 @@ class CourseCreateTest (
         val courseReq2 = CourseReq("Lógica de Programação 1", "LG2", "Lógica de p...")
         postCourse(courseReq1)
 
-        val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(coursesUrl, courseReq2, problemDetailResParam)
+        val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(
+            coursesUrl, courseReq2, problemDetailResParam
+        )
         response.apply {
             statusCode shouldBe HttpStatus.CONFLICT
             body?.title shouldBe "Resource already exists"
@@ -44,11 +46,12 @@ class CourseCreateTest (
         val courseReq2 = CourseReq("Lógica de Programação 2", "LG1", "Lógica de p...")
         postCourse(courseReq1)
 
-        val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(coursesUrl, courseReq2, problemDetailResParam)
+        val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(
+            coursesUrl, courseReq2, problemDetailResParam
+        )
         response.apply {
             statusCode shouldBe HttpStatus.CONFLICT
             body?.title shouldBe "Resource already exists"
         }
     }
-
 }

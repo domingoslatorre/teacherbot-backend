@@ -1,7 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto
 
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.model.Course
-import java.util.*
+import java.util.UUID
 
 data class CourseDto(
     val id: UUID,

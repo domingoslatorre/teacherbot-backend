@@ -4,12 +4,10 @@ import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.Cour
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.*
-import org.springframework.http.*
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpStatus
 
-class CourseUpdateTest (
-    @Autowired override val restTemplate: TestRestTemplate
-) : CourseIntegrationTest() {
+class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) : CourseIntegrationTest() {
 
     @Test
     fun `PUT course`() {
@@ -137,5 +135,4 @@ class CourseUpdateTest (
             body?.title shouldBe "Resource already exists"
         }
     }
-
 }

@@ -3,13 +3,16 @@ package com.domingoslatorre.teacherbot.teacherbotbackend.requests
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.inspectors.forExactly
-import io.kotest.matchers.collections.*
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldHaveAtLeastSize
 import io.kotest.matchers.shouldBe
-import javax.validation.*
+import javax.validation.Validation
+import javax.validation.Validator
 
-class CourseCreateTeste: WordSpec() {
+@Suppress("unused")
+class CourseCreateTest : WordSpec() {
     init {
-        val validator: Validator = Validation.buildDefaultValidatorFactory().validator;
+        val validator: Validator = Validation.buildDefaultValidatorFactory().validator
 
         "CourseCreate" When {
             "name is valid" should {
@@ -116,9 +119,6 @@ class CourseCreateTeste: WordSpec() {
                     }
                 }
             }
-
-
-
         }
     }
 }

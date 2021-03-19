@@ -1,6 +1,6 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.*
+import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.CourseDto
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 
-class CourseGetAllTest (
-    @Autowired override val restTemplate: TestRestTemplate
-) : CourseIntegrationTest() {
+class CourseGetAllTest(@Autowired override val restTemplate: TestRestTemplate) : CourseIntegrationTest() {
 
     @Test
     fun `GET all courses - empty list`() {
