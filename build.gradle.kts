@@ -7,6 +7,7 @@ plugins {
 	kotlin("jvm") version "1.4.30"
 	kotlin("plugin.spring") version "1.4.30"
 	kotlin("plugin.jpa") version "1.4.30"
+	jacoco
 }
 
 group = "com.domingoslatorre.teacherbot"
@@ -54,4 +55,32 @@ detekt {
 	toolVersion = "1.16.0"
 	config = files("config/detekt/detekt.yml")
 	buildUponDefaultConfig = true
+}
+
+jacoco {
+	toolVersion = "0.8.6"
+	reportsDirectory.set(file("$buildDir/customJacocoReportDir"))
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		xml.isEnabled = true
+		csv.isEnabled = true
+		html.destination = file("$buildDir/jacocoHtml")
+	}
+}
+
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = "1".toBigDecimal()
+			}
+		}
+	}
 }
