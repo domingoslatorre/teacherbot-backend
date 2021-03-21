@@ -2,7 +2,6 @@ package com.domingoslatorre.teacherbot.teacherbotbackend.course.api
 
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.ModuleReq
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.ModuleService
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.ModuleDto
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.asDto
 import java.net.URI
 import java.util.UUID
