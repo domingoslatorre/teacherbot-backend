@@ -20,9 +20,10 @@ class CourseDeleteTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `DELETE course - NotFound`() {
-        deleteCourseProblemDetail(UUID.randomUUID()).apply {
+        val id = UUID.randomUUID()
+        deleteCourseProblemDetail(id).apply {
             statusCode shouldBe HttpStatus.NOT_FOUND
-            body?.title shouldBe "Resource not found"
+            body?.title shouldBe "Course not found with id $id"
         }
     }
 }
