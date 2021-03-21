@@ -8,7 +8,8 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 
-data class ModuleAlreadyExists(override val message: String) : RuntimeException(message)
+class ModuleAlreadyExistsException(val courseId: UUID, val title: String) : RuntimeException()
+class ModuleNotFoundException(val courseId: UUID, val moduleId: UUID) : RuntimeException()
 
 @Entity
 class Course(
@@ -33,6 +34,11 @@ class Course(
     fun addModule(title: String, objective: String, position: Int): Result<Module> =
         Module(title = title, objective = objective, position = position).let {
             if (modules.add(it)) Result.success(it)
-            else Result.failure(ModuleAlreadyExists("Module with title $title already exists in course $id"))
+            else Result.failure(ModuleAlreadyExistsException(id, title))
         }
+
+    fun getModuleById(moduleId: UUID) = when (val module = modules.firstOrNull { it.id == moduleId }) {
+        null -> Result.failure(ModuleNotFoundException(id, moduleId))
+        else -> Result.success(module)
+    }
 }
