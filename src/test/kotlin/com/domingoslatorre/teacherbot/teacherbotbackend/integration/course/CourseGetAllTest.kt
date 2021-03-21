@@ -1,7 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.CourseDto
+import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseReqFactory
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,9 +20,9 @@ class CourseGetAllTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `GET all courses - three registered`() {
-        postCourse(CourseReq("Lógica 1", "LG1", "Lógica de p..."))
-        postCourse(CourseReq("Lógica 2", "LG2", "Lógica de p..."))
-        postCourse(CourseReq("Lógica 3", "LG3", "Lógica de p..."))
+        postCourse(CourseReqFactory.courseReq(name = "Course 1", acronym = "CO1"))
+        postCourse(CourseReqFactory.courseReq(name = "Course 2", acronym = "CO2"))
+        postCourse(CourseReqFactory.courseReq(name = "Course 3", acronym = "CO3"))
 
         getCourses().apply {
             statusCode shouldBe HttpStatus.OK
