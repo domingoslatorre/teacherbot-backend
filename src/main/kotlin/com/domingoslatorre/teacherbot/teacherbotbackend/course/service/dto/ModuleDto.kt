@@ -6,7 +6,8 @@ import java.util.UUID
 data class ModuleDto(
     val id: UUID,
     val title: String,
-    val order: Int,
+    val objective: String,
+    val position: Int,
 )
 
-fun Module.asDto() = ModuleDto(id, title, order)
+fun Module.asDto() = ModuleDto(id, title, objective, position)
