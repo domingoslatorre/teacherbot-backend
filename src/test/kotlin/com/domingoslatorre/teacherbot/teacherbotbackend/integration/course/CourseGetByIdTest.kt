@@ -1,6 +1,5 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
 import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseReqFactory
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -29,9 +28,10 @@ class CourseGetByIdTest(@Autowired override val restTemplate: TestRestTemplate) 
 
     @Test
     fun `GET course by id - NotFound`() {
-        getCourseProblemDetail(UUID.randomUUID()).apply {
+        val id = UUID.randomUUID()
+        getCourseProblemDetail(id).apply {
             statusCode shouldBe HttpStatus.NOT_FOUND
-            body?.title shouldBe "Resource not found"
+            body?.title shouldBe "Course not found with id $id"
         }
     }
 }

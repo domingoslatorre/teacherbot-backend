@@ -36,7 +36,7 @@ class CourseCreateTest(@Autowired override val restTemplate: TestRestTemplate) :
         )
         response.apply {
             statusCode shouldBe HttpStatus.CONFLICT
-            body?.title shouldBe "Resource already exists"
+            body?.title shouldBe "Course already exists with name ${courseReq2.name} and acronym ${courseReq2.acronym}"
         }
     }
 
@@ -51,7 +51,7 @@ class CourseCreateTest(@Autowired override val restTemplate: TestRestTemplate) :
         )
         response.apply {
             statusCode shouldBe HttpStatus.CONFLICT
-            body?.title shouldBe "Resource already exists"
+            body?.title shouldBe "Course already exists with name ${courseReq2.name} and acronym ${courseReq2.acronym}"
         }
     }
 }

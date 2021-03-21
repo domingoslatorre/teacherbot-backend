@@ -1,6 +1,6 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.model
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.model.ModuleAlreadyExists
+import com.domingoslatorre.teacherbot.teacherbotbackend.course.model.ModuleAlreadyExistsException
 import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseFactory
 import com.domingoslatorre.teacherbot.teacherbotbackend.factory.ModuleFactory
 import io.kotest.core.spec.style.FunSpec
@@ -67,12 +67,15 @@ class CourseTest : FunSpec({
             result.isFailure.shouldBeTrue()
         }
 
-        test("should return a ModuleAlreadyExists") {
-            result.exceptionOrNull()!!.shouldBeInstanceOf<ModuleAlreadyExists>()
+        test("should return a ModuleAlreadyExistsException") {
+            result.exceptionOrNull()!!.shouldBeInstanceOf<ModuleAlreadyExistsException>()
         }
 
-        test("should return a message") {
-            result.exceptionOrNull()!!.message shouldBe "Module with title $title already exists in course ${course.id}"
+        test("should return course id and title inside the exception") {
+            (result.exceptionOrNull()!! as ModuleAlreadyExistsException).apply {
+                courseId shouldBe course.id
+                title shouldBe title
+            }
         }
     }
 })
