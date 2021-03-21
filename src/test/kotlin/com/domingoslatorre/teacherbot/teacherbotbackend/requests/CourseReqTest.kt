@@ -1,6 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.requests
 
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
+import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseReqFactory
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.inspectors.forExactly
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -10,19 +11,19 @@ import javax.validation.Validation
 import javax.validation.Validator
 
 @Suppress("unused")
-class CourseCreateTest : WordSpec() {
+class CourseReqTest : WordSpec() {
     init {
         val validator: Validator = Validation.buildDefaultValidatorFactory().validator
 
         "CourseCreate" When {
             "name is valid" should {
-                val violations = validator.validate(CourseReq("Lógica 2", "LG2", "Lógica de Prog..."))
+                val violations = validator.validate(CourseReqFactory.courseReq())
                 "have no violation" {
                     violations.shouldBeEmpty()
                 }
             }
             "name is blank" should {
-                val violations = validator.validate(CourseReq("  ", "LG2", "Lógica de Prog..."))
+                val violations = validator.validate(CourseReqFactory.courseReq(name = "  "))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
@@ -34,7 +35,7 @@ class CourseCreateTest : WordSpec() {
                 }
             }
             "name is null" should {
-                val violations = validator.validate(CourseReq(null, "LG2", "Lógica de Prog..."))
+                val violations = validator.validate(CourseReqFactory.courseReq(name = null))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
@@ -47,7 +48,7 @@ class CourseCreateTest : WordSpec() {
             }
 
             "acronym is blank" should {
-                val violations = validator.validate(CourseReq("Lógica 2", "  ", "Lógica de Prog..."))
+                val violations = validator.validate(CourseReqFactory.courseReq(acronym = "  "))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
@@ -59,7 +60,7 @@ class CourseCreateTest : WordSpec() {
                 }
             }
             "acronym is null" should {
-                val violations = validator.validate(CourseReq("Lógica 2", null, "Lógica de Prog..."))
+                val violations = validator.validate(CourseReqFactory.courseReq(acronym = null))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
@@ -71,7 +72,7 @@ class CourseCreateTest : WordSpec() {
                 }
             }
             "acronym size is less than 2" should {
-                val violations = validator.validate(CourseReq("Lógica 2", "L", "Lógica de Prog..."))
+                val violations = validator.validate(CourseReqFactory.courseReq(acronym = "C"))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
@@ -83,7 +84,7 @@ class CourseCreateTest : WordSpec() {
                 }
             }
             "acronym size is greater than 5" should {
-                val violations = validator.validate(CourseReq("Lógica 2", "LOGICA", "Lógica de Prog..."))
+                val violations = validator.validate(CourseReqFactory.courseReq(acronym = "COURSE"))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
@@ -96,7 +97,7 @@ class CourseCreateTest : WordSpec() {
             }
 
             "description is blank" should {
-                val violations = validator.validate(CourseReq("Lógica de Programação 2", "LG2", " "))
+                val violations = validator.validate(CourseReqFactory.courseReq(description = "  "))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
@@ -108,7 +109,7 @@ class CourseCreateTest : WordSpec() {
                 }
             }
             "description is null" should {
-                val violations = validator.validate(CourseReq("Lógica de Programação 2", "LG2", null))
+                val violations = validator.validate(CourseReqFactory.courseReq(description = null))
                 "have 1 violation" {
                     violations.shouldHaveAtLeastSize(1)
                 }
