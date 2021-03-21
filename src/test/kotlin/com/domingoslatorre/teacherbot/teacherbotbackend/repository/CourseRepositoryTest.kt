@@ -1,7 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.repository
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.model.Course
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.repository.CourseRepository
+import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseFactory
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import org.junit.jupiter.api.Test
@@ -17,10 +17,10 @@ class CourseRepositoryTest(@Autowired val courseRepository: CourseRepository) {
 
     @Test
     fun `should exists by name or acronym`() {
-        val course1 = Course(name = "Lógica 1", acronym = "LG1", description = "...", modules = mutableListOf()).also {
+        val course1 = CourseFactory.course(name = "Lógica 1", acronym = "LG1").also {
             courseRepository.save(it)
         }
-        val course2 = Course(name = "Lógica 2", acronym = "LG2", description = "...", modules = mutableListOf()).also {
+        val course2 = CourseFactory.course(name = "Lógica 2", acronym = "LG2").also {
             courseRepository.save(it)
         }
 
@@ -35,10 +35,10 @@ class CourseRepositoryTest(@Autowired val courseRepository: CourseRepository) {
 
     @Test
     fun `should exists by name or acronym, excluded id`() {
-        val course1 = Course(name = "Lógica 1", acronym = "LG1", description = "...", modules = mutableListOf()).also {
+        val course1 = CourseFactory.course(name = "Lógica 1", acronym = "LG1").also {
             courseRepository.save(it)
         }
-        val course2 = Course(name = "Lógica 2", acronym = "LG2", description = "...", modules = mutableListOf()).also {
+        val course2 = CourseFactory.course(name = "Lógica 2", acronym = "LG2").also {
             courseRepository.save(it)
         }
 
