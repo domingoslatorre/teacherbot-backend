@@ -1,6 +1,6 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
+import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseReqFactory
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,9 +11,9 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `PUT course`() {
-        val courseReq = CourseReq("Lógica de Programação 5", "LG5", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq()
         val postRes = postCourse(courseReq)
-        val courseEditReq = courseReq.copy(name = "Lógica de Programação 4", acronym = "LG4", description = "...")
+        val courseEditReq = courseReq.copy(name = "Course 2", acronym = "CO2")
         putCourse(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.OK
             body!!.apply {
@@ -27,13 +27,13 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `PUT course - different name, different acronym - Ok`() {
-        postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
-        postCourse(CourseReq("Lógica de Programação 2", "LG2", "Lógica de p..."))
+        postCourse(CourseReqFactory.courseReq())
+        postCourse(CourseReqFactory.courseReq2())
 
-        val courseReq = CourseReq("Lógica de Programação 3", "LG3", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq3()
         val postRes = postCourse(courseReq)
 
-        val courseEditReq = courseReq.copy(name = "Lógica de Programação 5", acronym = "LG5")
+        val courseEditReq = courseReq.copy(name = "Course 4", acronym = "CO4")
 
         putCourse(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.OK
@@ -48,13 +48,13 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `PUT course - different name, same acronym - Ok`() {
-        postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
-        postCourse(CourseReq("Lógica de Programação 2", "LG2", "Lógica de p..."))
+        postCourse(CourseReqFactory.courseReq())
+        postCourse(CourseReqFactory.courseReq2())
 
-        val courseReq = CourseReq("Lógica de Programação 3", "LG3", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq3()
         val postRes = postCourse(courseReq)
 
-        val courseEditReq = courseReq.copy(name = "Lógica de Programação 5", acronym = "LG3")
+        val courseEditReq = courseReq.copy(name = "Course 4")
 
         putCourse(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.OK
@@ -69,13 +69,13 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `PUT course - same name, different acronym - Ok`() {
-        postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
-        postCourse(CourseReq("Lógica de Programação 2", "LG2", "Lógica de p..."))
+        postCourse(CourseReqFactory.courseReq())
+        postCourse(CourseReqFactory.courseReq2())
 
-        val courseReq = CourseReq("Lógica de Programação 3", "LG3", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq3()
         val postRes = postCourse(courseReq)
 
-        val courseEditReq = courseReq.copy(name = "Lógica de Programação 3", acronym = "LG5")
+        val courseEditReq = courseReq.copy(acronym = "CO4")
 
         putCourse(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.OK
@@ -90,13 +90,13 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `PUT course - different name (already exists), same acronym - Conflict`() {
-        postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
-        postCourse(CourseReq("Lógica de Programação 2", "LG2", "Lógica de p..."))
+        val postRes1 = postCourse(CourseReqFactory.courseReq()).body!!
+        postCourse(CourseReqFactory.courseReq2())
 
-        val courseReq = CourseReq("Lógica de Programação 3", "LG3", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq3()
         val postRes = postCourse(courseReq)
 
-        val courseEditReq = courseReq.copy(name = "Lógica de Programação 2", acronym = "LG3")
+        val courseEditReq = courseReq.copy(name = postRes1.name)
 
         putCourseProblemDetail(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.CONFLICT
@@ -106,13 +106,13 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `PUT course - same name, different acronym (already exists) - Conflict`() {
-        postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
-        postCourse(CourseReq("Lógica de Programação 2", "LG2", "Lógica de p..."))
+        val postRes1 = postCourse(CourseReqFactory.courseReq()).body!!
+        postCourse(CourseReqFactory.courseReq2())
 
-        val courseReq = CourseReq("Lógica de Programação 3", "LG3", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq3()
         val postRes = postCourse(courseReq)
 
-        val courseEditReq = courseReq.copy(name = "Lógica de Programação 3", acronym = "LG2")
+        val courseEditReq = courseReq.copy(acronym = postRes1.acronym)
 
         putCourseProblemDetail(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.CONFLICT
@@ -122,13 +122,13 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `PUT course - different name (already exists), different acronym (already exists) - Conflict`() {
-        postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
-        postCourse(CourseReq("Lógica de Programação 2", "LG2", "Lógica de p..."))
+        val postRes1 = postCourse(CourseReqFactory.courseReq()).body!!
+        postCourse(CourseReqFactory.courseReq2())
 
-        val courseReq = CourseReq("Lógica de Programação 3", "LG3", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq3()
         val postRes = postCourse(courseReq)
 
-        val courseEditReq = courseReq.copy(name = "Lógica de Programação 1", acronym = "LG1")
+        val courseEditReq = courseReq.copy(name = postRes1.name, acronym = postRes1.acronym)
 
         putCourseProblemDetail(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.CONFLICT

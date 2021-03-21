@@ -1,7 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
 import com.domingoslatorre.teacherbot.teacherbotbackend.common.ProblemDetail
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
+import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseReqFactory
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +14,7 @@ class CourseCreateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `POST course`() {
-        val courseReq = CourseReq("Lógica de Programação 5", "LG5", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq()
         postCourse(courseReq).apply {
             statusCode shouldBe HttpStatus.CREATED
             body?.apply {
@@ -27,8 +27,8 @@ class CourseCreateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `POST course - name already exists - Conflict`() {
-        val courseReq1 = CourseReq("Lógica de Programação 1", "LG1", "Lógica de p...")
-        val courseReq2 = CourseReq("Lógica de Programação 1", "LG2", "Lógica de p...")
+        val courseReq1 = CourseReqFactory.courseReq(name = "Course name")
+        val courseReq2 = CourseReqFactory.courseReq(name = "Course name")
         postCourse(courseReq1)
 
         val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(
@@ -42,8 +42,8 @@ class CourseCreateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
     @Test
     fun `POST course - acronym name already exists - Conflict`() {
-        val courseReq1 = CourseReq("Lógica de Programação 1", "LG1", "Lógica de p...")
-        val courseReq2 = CourseReq("Lógica de Programação 2", "LG1", "Lógica de p...")
+        val courseReq1 = CourseReqFactory.courseReq(name = "Course name 1", acronym = "AC1")
+        val courseReq2 = CourseReqFactory.courseReq(name = "Course name 2", acronym = "AC1")
         postCourse(courseReq1)
 
         val response: ResponseEntity<ProblemDetail> = restTemplate.postForEntity(

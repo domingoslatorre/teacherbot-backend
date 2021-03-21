@@ -1,6 +1,7 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
+import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseReqFactory
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,7 +13,7 @@ class CourseGetByIdTest(@Autowired override val restTemplate: TestRestTemplate) 
 
     @Test
     fun `GET course by id`() {
-        val courseReq = CourseReq("Lógica de Programação 2", "LG2", "Lógica de p...")
+        val courseReq = CourseReqFactory.courseReq()
         val postRes = postCourse(courseReq)
 
         getCourseById(postRes.body!!.id).apply {

@@ -1,18 +1,18 @@
 package com.domingoslatorre.teacherbot.teacherbotbackend.integration.course
 
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.CourseReq
+import com.domingoslatorre.teacherbot.teacherbotbackend.factory.CourseReqFactory
 import io.kotest.matchers.shouldBe
+import java.util.UUID
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
-import java.util.UUID
 
 class CourseDeleteTest(@Autowired override val restTemplate: TestRestTemplate) : CourseIntegrationTest() {
 
     @Test
     fun `DELETE course`() {
-        val postRes = postCourse(CourseReq("Lógica de Programação 1", "LG1", "Lógica de p..."))
+        val postRes = postCourse(CourseReqFactory.courseReq())
         deleteCourse(postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.NO_CONTENT
         }
