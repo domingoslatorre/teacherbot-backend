@@ -100,7 +100,8 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
         putCourseProblemDetail(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.CONFLICT
-            body?.title shouldBe "Course already exists with name ${courseEditReq.name} and acronym ${courseEditReq.acronym}"
+            body?.title shouldBe
+                "Course already exists with name ${courseEditReq.name} and acronym ${courseEditReq.acronym}"
         }
     }
 
@@ -116,7 +117,8 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
         putCourseProblemDetail(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.CONFLICT
-            body?.title shouldBe "Course already exists with name ${courseEditReq.name} and acronym ${courseEditReq.acronym}"
+            body?.title shouldBe
+                "Course already exists with name ${courseEditReq.name} and acronym ${courseEditReq.acronym}"
         }
     }
 
@@ -132,7 +134,8 @@ class CourseUpdateTest(@Autowired override val restTemplate: TestRestTemplate) :
 
         putCourseProblemDetail(courseEditReq, postRes.body!!.id).apply {
             statusCode shouldBe HttpStatus.CONFLICT
-            body?.title shouldBe "Course already exists with name ${courseEditReq.name} and acronym ${courseEditReq.acronym}"
+            body?.title shouldBe
+                "Course already exists with name ${courseEditReq.name} and acronym ${courseEditReq.acronym}"
         }
     }
 }
