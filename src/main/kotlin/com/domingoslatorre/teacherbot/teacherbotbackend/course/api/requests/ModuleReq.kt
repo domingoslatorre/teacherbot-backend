@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull
 data class ModuleReq(
     @field:[NotNull NotBlank]
     val title: String?,
+    @field:[NotNull NotBlank]
+    val objective: String?,
+    @field:NotNull
     @field:Min(value = 1)
-    val order: Int?,
+    val position: Int?,
 )
