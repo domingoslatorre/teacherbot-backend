@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -35,4 +36,10 @@ class ModuleResource(val service: ModuleService) {
         service.create(courseId, body.title!!, body.objective!!, body.position!!)
             .getOrThrow()
             .let { ResponseEntity.created(URI.create("courses/$courseId/modules/${it.id}")).body(it.asDto()) }
+
+    @PutMapping("{moduleId}")
+    fun update(@PathVariable courseId: UUID, @PathVariable moduleId: UUID, @Valid @RequestBody body: ModuleReq) =
+        service.update(courseId, moduleId, body.title!!, body.objective!!, body.position!!)
+            .getOrThrow()
+            .let { ResponseEntity.ok(it) }
 }
