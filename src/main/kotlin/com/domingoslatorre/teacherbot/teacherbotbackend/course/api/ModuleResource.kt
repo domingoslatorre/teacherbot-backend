@@ -32,7 +32,7 @@ class ModuleResource(val service: ModuleService) {
 
     @PostMapping
     fun create(@PathVariable courseId: UUID, @Valid @RequestBody body: ModuleReq) =
-        service.createModule(courseId, body.title!!, body.objective!!, body.position!!)
+        service.create(courseId, body.title!!, body.objective!!, body.position!!)
             .getOrThrow()
             .let { ResponseEntity.created(URI.create("courses/$courseId/modules/${it.id}")).body(it.asDto()) }
 }
