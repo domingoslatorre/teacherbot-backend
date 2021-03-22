@@ -27,7 +27,7 @@ class ModuleService(val repo: CourseRepository) {
             { Result.failure(it) }
         )
 
-    fun createModule(courseId: UUID, title: String, objective: String, position: Int) = findCourseById(repo, courseId)
+    fun create(courseId: UUID, title: String, objective: String, position: Int) = findCourseById(repo, courseId)
         .fold(
             { course ->
                 course.addModule(title, objective, position).fold(
