@@ -2,7 +2,6 @@ package com.domingoslatorre.teacherbot.teacherbotbackend.course.api
 
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.ModuleReq
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.ModuleService
-import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.asDto
 import java.net.URI
 import java.util.UUID
 import javax.validation.Valid
@@ -35,7 +34,7 @@ class ModuleResource(val service: ModuleService) {
     fun create(@PathVariable courseId: UUID, @Valid @RequestBody body: ModuleReq) =
         service.create(courseId, body.title!!, body.objective!!, body.position!!)
             .getOrThrow()
-            .let { ResponseEntity.created(URI.create("/courses/$courseId/modules/${it.id}")).body(it.asDto()) }
+            .let { ResponseEntity.created(URI.create("/courses/$courseId/modules/${it.id}")).body(it) }
 
     @PutMapping("{moduleId}")
     fun update(@PathVariable courseId: UUID, @PathVariable moduleId: UUID, @Valid @RequestBody body: ModuleReq) =

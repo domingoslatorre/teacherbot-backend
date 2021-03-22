@@ -31,10 +31,7 @@ class ModuleService(val repo: CourseRepository) {
         .fold(
             { course ->
                 course.addModule(title, objective, position).fold(
-                    {
-                        repo.save(course)
-                        Result.success(it)
-                    },
+                    { repo.save(course).run { Result.success(it.asDto()) } },
                     { Result.failure(it) }
                 )
             },
