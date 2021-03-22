@@ -5,12 +5,16 @@ import com.domingoslatorre.teacherbot.teacherbotbackend.course.api.requests.Modu
 import com.domingoslatorre.teacherbot.teacherbotbackend.course.service.dto.ModuleDto
 import com.domingoslatorre.teacherbot.teacherbotbackend.integration.course.CourseIntegrationTest
 import com.domingoslatorre.teacherbot.teacherbotbackend.integration.course.moduleListResParam
+import com.domingoslatorre.teacherbot.teacherbotbackend.integration.course.moduleParam
 import com.domingoslatorre.teacherbot.teacherbotbackend.integration.course.moduleResParam
 import com.domingoslatorre.teacherbot.teacherbotbackend.integration.course.problemDetailParam
 import java.util.UUID
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.boot.test.web.client.postForEntity
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 
 abstract class ModuleIntegrationTest : CourseIntegrationTest() {
@@ -33,4 +37,24 @@ abstract class ModuleIntegrationTest : CourseIntegrationTest() {
 
     protected fun postModuleProblemDetail(courseId: UUID, moduleReq: ModuleReq): ResponseEntity<ProblemDetail> =
         restTemplate.postForEntity(modulesUrl(courseId), moduleReq, problemDetailParam)
+
+    protected fun putModule(courseId: UUID, moduleId: UUID, moduleReq: ModuleReq): ResponseEntity<ModuleDto> =
+        restTemplate.exchange(
+            moduleUrl(courseId, moduleId),
+            HttpMethod.PUT,
+            HttpEntity(moduleReq, HttpHeaders.EMPTY),
+            moduleParam
+        )
+
+    protected fun putModuleProblemDetail(
+        courseId: UUID,
+        moduleId: UUID,
+        moduleReq: ModuleReq
+    ): ResponseEntity<ProblemDetail> =
+        restTemplate.exchange(
+            moduleUrl(courseId, moduleId),
+            HttpMethod.PUT,
+            HttpEntity(moduleReq, HttpHeaders.EMPTY),
+            problemDetailParam
+        )
 }
