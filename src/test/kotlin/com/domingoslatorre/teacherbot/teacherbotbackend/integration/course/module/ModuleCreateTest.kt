@@ -26,6 +26,7 @@ class ModuleCreateTest(@Autowired override val restTemplate: TestRestTemplate) :
                 objective shouldBe moduleReq.objective
                 position shouldBe moduleReq.position
             }
+            headers.location!!.path shouldBe "/courses/${courseRes.id}/modules/${this.body!!.id}"
         }
 
         getModules(courseRes.id).body!! shouldHaveSize 1

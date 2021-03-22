@@ -22,6 +22,7 @@ class CourseCreateTest(@Autowired override val restTemplate: TestRestTemplate) :
                 acronym shouldBe courseReq.acronym
                 description shouldBe courseReq.description
             }
+            headers.location!!.path shouldBe "/courses/${this.body!!.id}"
         }
     }
 
