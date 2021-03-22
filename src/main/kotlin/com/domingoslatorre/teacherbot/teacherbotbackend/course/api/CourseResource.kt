@@ -34,7 +34,7 @@ class CourseResource(val service: CourseService) {
     @PostMapping
     fun create(@Valid @RequestBody body: CourseReq) = service.create(body.name!!, body.description!!, body.acronym!!)
         .getOrThrow()
-        .let { ResponseEntity.created(URI.create("")).body(it) }
+        .let { ResponseEntity.created(URI.create("/courses/${it.id}")).body(it) }
 
     @PutMapping("{id}")
     fun update(@Valid @RequestBody body: CourseReq, @PathVariable id: UUID) =

@@ -35,7 +35,7 @@ class ModuleResource(val service: ModuleService) {
     fun create(@PathVariable courseId: UUID, @Valid @RequestBody body: ModuleReq) =
         service.create(courseId, body.title!!, body.objective!!, body.position!!)
             .getOrThrow()
-            .let { ResponseEntity.created(URI.create("courses/$courseId/modules/${it.id}")).body(it.asDto()) }
+            .let { ResponseEntity.created(URI.create("/courses/$courseId/modules/${it.id}")).body(it.asDto()) }
 
     @PutMapping("{moduleId}")
     fun update(@PathVariable courseId: UUID, @PathVariable moduleId: UUID, @Valid @RequestBody body: ModuleReq) =
