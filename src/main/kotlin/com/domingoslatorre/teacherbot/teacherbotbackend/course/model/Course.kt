@@ -41,4 +41,17 @@ class Course(
         null -> Result.failure(ModuleNotFoundException(id, moduleId))
         else -> Result.success(module)
     }
+
+    fun updateModule(moduleId: UUID, title: String, objective: String, position: Int) = getModuleById(moduleId)
+        .fold(
+            { module ->
+                if (modules.any { it.title == title && it.id != moduleId }) {
+                    Result.failure(ModuleAlreadyExistsException(id, title))
+                } else {
+                    module.update(title, objective, position)
+                    Result.success(module)
+                }
+            },
+            { Result.failure(it) }
+        )
 }
