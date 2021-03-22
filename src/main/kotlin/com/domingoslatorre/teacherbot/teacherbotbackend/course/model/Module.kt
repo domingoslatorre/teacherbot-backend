@@ -8,9 +8,9 @@ import javax.persistence.Id
 class Module(
     @Id
     val id: UUID = UUID.randomUUID(),
-    val title: String,
-    val objective: String,
-    val position: Int,
+    var title: String,
+    var objective: String,
+    var position: Int,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -25,5 +25,11 @@ class Module(
 
     override fun hashCode(): Int {
         return title.hashCode()
+    }
+
+    fun update(title: String, objective: String, position: Int) {
+        this.title = title
+        this.objective = objective
+        this.position = position
     }
 }
