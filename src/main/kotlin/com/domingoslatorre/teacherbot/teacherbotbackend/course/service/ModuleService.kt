@@ -45,7 +45,7 @@ class ModuleService(val repo: CourseRepository) {
         findCourseById(repo, courseId)
             .fold(
                 { course ->
-                    course.addModule(title, objective, position).fold(
+                    course.updateModule(moduleId, title, objective, position).fold(
                         { repo.save(course).run { Result.success(it.asDto()) } },
                         { Result.failure(it) }
                     )
