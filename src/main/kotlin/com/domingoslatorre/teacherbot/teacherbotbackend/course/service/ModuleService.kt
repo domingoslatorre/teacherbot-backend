@@ -40,4 +40,16 @@ class ModuleService(val repo: CourseRepository) {
             },
             { Result.failure(it) }
         )
+
+    fun update(courseId: UUID, moduleId: UUID, title: String, objective: String, position: Int) =
+        findCourseById(repo, courseId)
+            .fold(
+                { course ->
+                    course.addModule(title, objective, position).fold(
+                        { repo.save(course).run { Result.success(it.asDto()) } },
+                        { Result.failure(it) }
+                    )
+                },
+                { Result.failure(it) }
+            )
 }
